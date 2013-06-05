@@ -39,8 +39,26 @@ public class DwarfCleric {
 		}
 		
 		// initialize OpenGL here
+		GL11.glMatrixMode(GL11.GL_PROJECTION);
+		GL11.glLoadIdentity();
+		GL11.glOrtho(0, 800, 0, 600, 1, -1);
+		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		
 		while (!Display.isCloseRequested()) {
 			// render OpenGL here
+			//Clear the screen and depth buffer
+			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+			
+			// set the color of the quad (R,G,B,A)
+			GL11.glColor3f(0.5f,0.5f,1.0f);
+			
+			// draw quad
+//			GL11.glBegin(GL11.GL_QUADS);
+//			GL11.glVertex2f(100, 100);
+//			GL11.glVertex2f(100+200, 100);
+//			GL11.glVertex2f(100+200, 100+200);
+//			GL11.glVertex2f(100, 100+200);
+//			GL11.glEnd();
 			
 			pollInput(); //I guess I don't need a this.pollInput() ?
 			Display.update();
@@ -51,14 +69,6 @@ public class DwarfCleric {
 	
 	
 	public void pollInput() {
-		//Check the mouse button down
-//		if (Mouse.isButtonDown(0)) {
-//			int x = Mouse.getX();
-//			int y = Mouse.getY();
-//			
-//			System.out.println("Mouse was left clicked at X: " + x + " Y: " + y);
-//		}
-		
 		//Doing it this way ensures that we only get one event per click
 		while (Mouse.next()) {
 			if (Mouse.getEventButtonState()) {
@@ -76,6 +86,18 @@ public class DwarfCleric {
 				}
 			}
 		}
+		
+		// draw quad
+		int x = Mouse.getX();
+		int y = Mouse.getY();
+		
+		GL11.glBegin(GL11.GL_QUADS);
+		GL11.glVertex2f(x, y);
+		GL11.glVertex2f(x+200, y);
+		GL11.glVertex2f(x+200, y+200);
+		GL11.glVertex2f(x, y+200);
+		GL11.glEnd();
+		
 	}
 	
 	public static void main(String[] args) {
