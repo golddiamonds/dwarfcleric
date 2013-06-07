@@ -27,6 +27,8 @@ import java.util.*;
 import org.lwjgl.util.glu.Sphere;
 
 public class DwarfCleric {
+	
+	boolean closeRequested = false;
 
 	public void startDisplay() {
 		// This code came from lwjgl tutorial 1 (Display)
@@ -37,6 +39,7 @@ public class DwarfCleric {
 			e.printStackTrace();
 			System.exit(0);
 		}
+		Mouse.setGrabbed(true);
 		
 		// initialize OpenGL here
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
@@ -44,7 +47,9 @@ public class DwarfCleric {
 		GL11.glOrtho(0, 800, 0, 600, 1, -1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		
-		while (!Display.isCloseRequested()) {
+		
+		
+		while (!Display.isCloseRequested() && !closeRequested) {
 			// render OpenGL here
 			//Clear the screen and depth buffer
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
@@ -83,6 +88,10 @@ public class DwarfCleric {
 			if (Keyboard.getEventKeyState()) {
 				if (Keyboard.getEventKey() == Keyboard.KEY_A) {
 					System.out.println("PRESSED: A");
+				}
+				if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
+					System.out.println("Quitting!");
+					this.closeRequested = true;
 				}
 			}
 		}
